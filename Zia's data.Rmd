@@ -1,0 +1,54 @@
+---
+title: "Zia's data"
+author: "Roxan Barakat"
+date: "2023-02-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+require(tidyverse)
+require(tigerstats)
+mydata <- read.csv(file="Ziasdata.csv")
+mydata$Scorpian_ID <- as.factor(mydata$Scorpion_ID)
+```
+
+#   Analysis of NumbProbes
+```{r}
+boxplot(NumProbes~Scorpian_ID,data=mydata)
+```
+The box plot displays that the "Low Temperature" box is placed higher than the "High Temperature" box. We can infer that the high temperature scorpions were more prone to sting than low temp scorpions. The NumProbes represents the amount the scorpions were poked before they were agitated. 
+
+```{r}
+favstats(NumProbes~Scorpian_ID,data=mydata)
+```
+
+The average amount of probes from scorpions placed in higher temperature is 6.5. The average amount of probes from scorpions placed in lower temperature is 23.5. Scorpions in lower temperature were less prone to sting compared to those in higher temperature.
+
+```{r}
+t.test(NumProbes~Scorpian_ID,data=mydata)
+```
+
+At 95% confidence level, there appears to be a difference in means between the scorpions placed in higher temperature and lower temperature. The p-value is 0.03651 which shows the probability the null hypothesis is true.
+
+# Analysis of TimeSting
+```{r}
+boxplot(TimeSting~Scorpian_ID,data=mydata)
+```
+
+The "High" temperature box is smaller than the "Low" temperature. It's not obvious that we will get a significant p-value. This means it took the "Low" temperature scorpions  longer to sting than the ones at a "High" temperature. 
+
+```{r}
+favstats(TimeSting~Scorpian_ID,data=mydata)
+```
+
+The scorpions placed in higher temperature took less time to sting compared to those in lower temperature. There's a difference in the mean, the standard deviation, and the median showed in the numerical results.
+
+```{r}
+t.test(TimeSting~Scorpian_ID,data=mydata, conf.level=.99)
+```
+
+The p-value for 95% confidence interval is 0.05165 which tells the probability that the alternative hypothesis is true. A P value greater than 0.05 means that no effect was observed. A T-test that's at a 90% confidence interval might be more effective than 95%. The 90% confidence interval is negative, therefore, we conclude that there's a difference at the 90% as well as the 95% interval between scorpions placed in high vs. low temperature environment.The 99% confidence interval which contains 0, therefore, they're not different at the 99% level. There was enough scorpions at first, but not enough was done, more scorpions need to be collected and experimenter in order to have a more accurate data. 
